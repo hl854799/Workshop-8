@@ -10,21 +10,18 @@ public class SwarmManager : MonoBehaviour {
     public float enemySpacing;
     public float stepSize;
     public float stepTime;
-    public float maxXDeviation;
+    public float maxXDeviation; // Largest/smallest X-coordinate the edge of the swarm should reach
 
     // Internal parameters/variables
-    private int direction;
     private float stepCountdown;
-    private float swarmWidth;
-    
-	// Use this for initialization
-	void Start () {
+
+    // Use this for initialization
+    void Start () {
         GenerateSwarm();
 
         // Initial parameters
         this.stepCountdown = this.stepTime;
         this.transform.localPosition = Vector3.left * maxXDeviation; // Start at far left
-        this.direction = 1; // Start moving towards the right (positive x-axis)
 	}
 	
 	// Update is called once per frame
@@ -37,40 +34,17 @@ public class SwarmManager : MonoBehaviour {
             this.StepSwarm();
             this.stepCountdown = this.stepTime;
         }
-	}
+    }
 
     // Method to automatically generate swarm of enemies based on the set public attributes
     private void GenerateSwarm()
     {
-        // Create swarm of enemies in a grid formation
-        for (int row = 0; row < enemyRows; row++)
-        {
-            for (int col = 0; col < enemyCols; col++)
-            {
-                GameObject enemy = GameObject.Instantiate<GameObject>(enemyTemplate);
-                enemy.transform.parent = this.transform;
-                enemy.transform.localPosition = new Vector3(col, 0.0f, row) * enemySpacing;
-            }
-        }
-        this.swarmWidth = (enemyCols - 1) * enemySpacing;
+        // Task 4b ...
     }
 
     // Method to step a swarm across the screen (or down & reverse when it reaches the edge)
     private void StepSwarm()
     {
-        // Check if the swarm has reached the "edge" of its allowed movement range, as specified
-        // by the "Max X Deviation" parameter. If so swarm should move down; otherwise sideways.
-        if (this.transform.localPosition.x < -maxXDeviation && this.direction == -1 || 
-            this.transform.localPosition.x + swarmWidth > maxXDeviation && this.direction == 1)
-        {
-            // Move swarm down
-            this.transform.Translate(Vector3.back * stepSize);
-            this.direction = -this.direction;
-        }
-        else
-        {
-            // Move swarm sideways
-            this.transform.Translate(Vector3.right * this.direction * stepSize);
-        }
+        // Task 4c ...
     }
 }
